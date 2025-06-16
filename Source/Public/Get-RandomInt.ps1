@@ -37,6 +37,7 @@ General notes
 #>
 function Get-RandomInt {
     [CmdletBinding()]
+    [OutputType([int])]
     param (
         # The lowest number to include. Defaults to the lowest possible number.
         [Parameter()][int]$Minimum = [Int]::MinValue,
