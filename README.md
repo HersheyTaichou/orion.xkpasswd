@@ -8,7 +8,11 @@ This function uses a dictionary array and the user's input to create a random me
 
 ## Install in PowerShell
 
-To install the module in PowerShell, so it does not have to be imported every time it is needed, download this entire folder and place it in Documents\PowerShell\Modules.
+This module is published in the [PowerShell Gallery](https://www.powershellgallery.com/packages/orion.xkpasswd/) and can be installed with the following command:
+
+```PowerShell
+Install-Module -Name orion.xkpasswd
+```
 
 ## PARAMETERS
 
