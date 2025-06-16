@@ -6,7 +6,7 @@ BeforeAll {
     # Remove trailing slash or backslash
     $ModulePath = $ModulePath -replace '[\\/]*$'
     $ModuleName = (Get-Item "$ModulePath\..").Name
-    $ModuleManifestName = 'GeneratePass.psd1'
+    $ModuleManifestName = 'orion.xkpasswd.psd1'
     $ModuleManifestPath = Join-Path -Path $ModulePath -ChildPath $ModuleManifestName
 }
 
