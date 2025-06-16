@@ -38,13 +38,12 @@ General notes
 function Get-RandomInt {
     [CmdletBinding()]
     param (
-        # The lowest number to include. Defaults to the lowest possible number
+        # The lowest number to include. Defaults to the lowest possible number.
         [Parameter()][int]$Minimum = [Int]::MinValue,
-        
-        # the highest number to include
+        # the highest number to include. Defaults to the highest possible number.
         [Parameter()][int]$Maximum = [Int]::MaxValue
     )
-    
+
     process {
         # Check to make sure minimum is less then maximum, then get a random number
         if ($Minimum -lt $Maximum) {
@@ -54,7 +53,7 @@ function Get-RandomInt {
             return -1
         }
     }
-    
+
     end {
         return $Return
     }
