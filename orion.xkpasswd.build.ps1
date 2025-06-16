@@ -54,9 +54,10 @@ task CompilePSM {
     Write-Build Yellow "`n`n`nCompiling all code into single psm1"
     try {
         $BuildParams = @{}
-        if((Get-Command -ErrorAction stop -Name gitversion)) {
-            $GitVersion = gitversion | ConvertFrom-Json | Select-Object -Expand FullSemVer
-            $GitVersion = gitversion | ConvertFrom-Json | Select-Object -Expand InformationalVersion
+        $GitVersionCMD = Get-Command -CommandType Application | Where-Object {$_.Name -like "*gitversion*"} | Sort-Object -Property Version -Descending -Top 1
+        if($GitVersionCMD) {
+            $GitVersion = &$GitVersionCMD | ConvertFrom-Json | Select-Object -Expand FullSemVer
+            $GitVersion = &$GitVersionCMD | ConvertFrom-Json | Select-Object -Expand InformationalVersion
             $BuildParams['SemVer'] = $GitVersion
         }
     }
