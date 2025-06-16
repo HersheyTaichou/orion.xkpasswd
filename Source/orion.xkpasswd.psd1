@@ -12,7 +12,7 @@
 RootModule = 'orion.xkpasswd.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.1'
+ModuleVersion = '1.1.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -98,10 +98,10 @@ PrivateData = @{
         # Tags = @()
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/HersheyTaichou/CodeBible-Module/blob/main/COPYING'
+        LicenseUri = 'https://github.com/HersheyTaichou/orion.xkpasswd/blob/main/license.txt'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/HersheyTaichou/CodeBible-Module/blob/main/orion.xkpasswd/README.md'
+        ProjectUri = 'https://github.com/HersheyTaichou/orion.xkpasswd/tree/main'
 
         # A URL to an icon representing this module.
         # IconUri = ''
@@ -110,7 +110,7 @@ PrivateData = @{
         # ReleaseNotes = ''
 
         # Prerelease string of this module
-        # Prerelease = ''
+        Prerelease = ''
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update/save
         # RequireLicenseAcceptance = $false
@@ -123,11 +123,9 @@ PrivateData = @{
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-HelpInfoURI = 'https://github.com/HersheyTaichou/CodeBible-Module/blob/main/orion.xkpasswd/README.md'
+HelpInfoURI = 'https://github.com/HersheyTaichou/orion.xkpasswd/blob/main/README.md'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''
 
 }
-
-
