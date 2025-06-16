@@ -193,10 +193,10 @@ CHANGELOG
   - Changes how words are selected from the array to speed up password generation
 #>
 function New-xkpasswd {
-    [cmdletBinding(DefaultParameterSetName = 'Default')]
+    [cmdletBinding(DefaultParameterSetName = 'Default',SupportsShouldProcess = $true)]
     [OutputType([string])]
-    
-    Param( 
+
+    Param(
         # Parameter help description
         [Parameter(ParameterSetName='Preset')]
         [ValidateSet("AppleID","NTLM","SecurityQ","Web16","Web32","WiFi","XKCD")]
@@ -204,7 +204,7 @@ function New-xkpasswd {
 
         # The number of words to include
         [Parameter(ParameterSetName='Default')]
-        [int]$WordCount = 3, 
+        [int]$WordCount = 3,
 
         # The minimum length of words to consider
         [Parameter(ParameterSetName='Default')]
@@ -227,23 +227,23 @@ function New-xkpasswd {
 
         # Padding digits at the front of the password
         [Parameter(ParameterSetName='Default')]
-        [int]$FrontPaddingDigits = 2, 
+        [int]$FrontPaddingDigits = 2,
 
         # Padding digits at the end of the password
         [Parameter(ParameterSetName='Default')]
-        [int]$EndPaddingDigits = 2, 
+        [int]$EndPaddingDigits = 2,
 
         # If using Adaptive padding
         [Parameter(ParameterSetName='Default')]
-        [int]$AdaptivePaddingLength, 
+        [int]$AdaptivePaddingLength,
 
         # Padding symbols at the front of the password
         [Parameter(ParameterSetName='Default')]
-        [int]$FrontPaddingSymbols = 2, 
+        [int]$FrontPaddingSymbols = 2,
 
         # Padding symbols at the end of the password
         [Parameter(ParameterSetName='Default')]
-        [int]$EndPaddingSymbols = 2, 
+        [int]$EndPaddingSymbols = 2,
 
         # Padding character randomly chosen from this set
         [Parameter(ParameterSetName='Default')]
@@ -256,7 +256,7 @@ function New-xkpasswd {
         [Parameter()]
         [int]$Count = 3
     )
-    
+
     begin {
         # DEFINE VARIABLES
         [String]$PWStructure = ""
@@ -269,7 +269,7 @@ function New-xkpasswd {
         if ($Preset) {
             Write-Verbose "PRESETS: $Preset"
         }
-        
+
         If ($Preset -eq "AppleID") {
             $WordCount = 3
             $MinWordLength = 5
@@ -347,7 +347,7 @@ function New-xkpasswd {
             $FrontPaddingSymbols = 0
             $EndPaddingSymbols = 0
         }
-        
+
         # Print out the current settings in a readable format
         $Settings = "SETTINGS:"
         $Settings += "`n`t"
@@ -434,7 +434,7 @@ function New-xkpasswd {
         }
         Write-Verbose $Settings
     }
-    
+
     process {
         <#
         (Verbose) Display password structure and length
@@ -463,7 +463,6 @@ function New-xkpasswd {
 
         $FilteredCount = ($dictCounts[$($MinWordLength-1)..$($MaxWordLength-1)] | Measure-Object -Sum).Sum
         Write-Verbose "Dictionary contains $($Dictionary.Count) words, which was filtered to $FilteredCount potential words."
-        
 
         # Display password structure and length
         if ($FrontPaddingSymbols) {
@@ -566,7 +565,7 @@ function New-xkpasswd {
         $VerboseMessage += " & $([math]::Round($EntropySeen,2)) bits with full knowledge (Suggest keeping blind entropy above 78 bits and seen above 52 bits)"
         Write-Verbose $VerboseMessage
 
-        for ($i = 0; $i -lt $count; $i++) {
+        $PasswordArray = for ($i = 0; $i -lt $count; $i++) {
             [string]$SecurePassword = $null
             # Select a random padding symbol from the provided array
             if ($PaddingSymbols.Count -gt 1) {
@@ -668,16 +667,16 @@ function New-xkpasswd {
                     $SecurePassword += $PadSymbol
                 }
             }
-            $PasswordArray += $SecurePassword
+            $SecurePassword
         }
     }
 
     end {
-        # Return the generated password
-        if ($Count -eq 1) {
-            return $SecurePassword
-        } else {
-            return $PasswordArray
+        $Return = if ($PSCmdlet.ShouldProcess($env:COMPUTERNAME,'New Password')) {
+            $PasswordArray
         }
+
+        # Return the generated password(s)
+        return $Return
     }
 }
